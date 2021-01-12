@@ -2,8 +2,8 @@
 
 namespace Controller;
 
-require($Http);
-require($utils);
+require_once($Http);
+require_once($utils);
 class Inscription // s'appel User
 {
     // attributs
@@ -86,8 +86,7 @@ class Inscription // s'appel User
                     $utilisateur = $modelConnection->findAll($login);
                     $_SESSION['utilisateur'] = $utilisateur; // la carte d'identité de l'utilisateur à été créer et initialisé dans une $_SESSION
                     var_dump($utilisateur);
-                    var_dump($_SESSION); // j'ai pa smis de session s tart
-
+                    var_dump($_SESSION); 
                     $Http = new \Http();
                     $Http->redirect('profil.php');
                 } else {

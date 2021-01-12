@@ -3,7 +3,7 @@
 namespace Models;
 
 require_once($database);
-require($utils);
+require_once($utils);
 // require_once($utils);
 // require('libraries/controller/Inscription.php');
 // remplacer my_sqli par pdo  

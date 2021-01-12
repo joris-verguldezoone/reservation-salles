@@ -1,4 +1,10 @@
 <?php
+//LIBRARIES
+$database = '../libraries/database.php';
+$utils = '../libraries/utils.php';
+$Http = '../libraries/Http.php';
+require('../libraries/controller/Reservation.php');
+require('../libraries/models/Reservation.php');
 //CSS
 $bootstrap = "../css/bootstrap.min.css";
 $headerCss = "../css/header.css";
@@ -17,3 +23,34 @@ require('../require/html_/header.php');
 //FOOTER
 $img_signature = 'images/netero.png';
 require('../require/html_/footer.php');
+
+
+?>
+
+<main>
+
+<form action="" method="POST">
+
+<label name="titre">Titre</label>
+<input type="text" id="titreForm" name="titre" required>
+
+<label name="description">Description</label>
+<textarea name="description" id="description" rows="5" cols="33" required></textarea>
+
+<label name="debut">Début</label>
+<input type="datetime-local" id="debutForm" name="debut" required>
+
+<label name="fin">Fin</label>
+<input type="datetime-local" id="finForm" name="fin" required>
+
+<input type="submit" id="submitForm" name="create" value="Créer événement">
+</form>
+<?php
+if (isset($_POST['create'])) {
+                var_dump($_POST);
+
+                $newEvent = new \Controller\Reservation(); // prend pas le bon
+                $newEvent->createEvent($_POST['titre'], $_POST['description'], $_POST['debut'], $_POST['fin'], $_SESSION['utilisateur']['id']);
+            }
+?>
+</main>
