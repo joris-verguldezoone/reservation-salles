@@ -131,6 +131,7 @@ abstract class Model
     }
     public function ifExist($login) // register->
     {
+        // $login = $this->login;                                                                           revoir
         $sql = "SELECT login FROM utilisateurs WHERE login = :login";
         $result = $this->pdo->prepare($sql);
         $result->bindvalue(':login', $login, \PDO::PARAM_STR);
