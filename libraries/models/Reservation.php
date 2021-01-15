@@ -41,8 +41,6 @@ class Reservation {
             $result->bindvalue(':debut',$debut, \PDO::PARAM_STR);
             $result->bindvalue(':fin',$fin, \PDO::PARAM_STR);
             $result->bindvalue(':id_utilisateur',$id_utilisateur, \PDO::PARAM_INT);
-            
-
 
             $result->execute();
             }
@@ -61,7 +59,7 @@ class Reservation {
         $id = $_SESSION['utilisateur']['id'];
 
 
-        $sql ="SELECT r.debut, r.fin FROM reservations AS r LEFT JOIN utilisateurs AS u ON u.id = id_utilisateur";
+        $sql ="SELECT r.debut, r.fin, r.titre, u.login, r.id FROM reservations AS r LEFT JOIN utilisateurs AS u ON u.id = id_utilisateur ORDER BY r.debut";
 
         $result = $this->pdo->prepare($sql);
         $result->execute();
@@ -80,7 +78,11 @@ class Reservation {
            $format = 'Y-m-d H:i:s';
            $dateTime2 = \DateTime::createFromFormat($format,$fetch['fin']);
            $tableau[$i][] = $dateTime2->getTimestamp();
-            $i++;
+
+           $tableau[$i][] = $fetch['titre'];
+           $tableau[$i][] = $fetch['login'];
+           $tableau[$i][] = $fetch['id'];
+        $i++;
 
         }
 
@@ -97,7 +99,6 @@ class Reservation {
             $i++;
         }
 
-        print_r($tableau);
         return $tableau;
 
         // $sql = "SELECT titre FROM reservations WHERE id_utilisateur = :SESSIONid AND id = :id";
@@ -117,8 +118,29 @@ class Reservation {
 
         return $result;
     }
+    public function eventLink($id){
+        $sql = "SELECT u.login, r.titre, r.description, r.debut, r.fin FROM reservations AS r INNER JOIN utilisateurs AS u WHERE r.id = '$id' AND u.id = r.id_utilisateur";
+        $result = $this->pdo->prepare($sql);
+        $result->bindvalue(':id', $id, \PDO::PARAM_INT);
+        $result->execute();
+        $i = 0;
+        while($fetch = $result->fetch(\PDO::FETCH_ASSOC)){
+            $tableau[$i][] = $fetch['login'];
+            $tableau[$i][] = $fetch['titre'];
+            $tableau[$i][] = $fetch['description'];
+            $tableau[$i][] = $fetch['debut'];
+            $tableau[$i][] = $fetch['fin'];
+            $i++;
+            
+            return $tableau;
+
+        }
+
+    }
 
 
-    // public function resaVerif()
 
-} 
+    
+        // public function resaVerif()
+    
+}

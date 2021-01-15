@@ -1,0 +1,16 @@
+section{
+    display: flex;
+    flex-direction: column;
+}
+table{
+    margin: 50px;
+    
+}
+td{
+    width:50vh;
+    border-bottom: solid black;
+    border-top: solid black;
+}
+th{
+    border: solid black;
+}
