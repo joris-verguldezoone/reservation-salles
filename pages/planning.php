@@ -46,7 +46,7 @@ $title = $CompareCalendar->getTitle();
 // recuperation du tableau 
 date_default_timezone_set('Europe/Paris'); // fuseau horaire
 
-while($dayInYear < 365 ){
+while($dayInYear < 28 ){
     
     if($dayInYear % 7 === 0)
     {
@@ -54,7 +54,7 @@ while($dayInYear < 365 ){
     }
     
     $DateTime->setTimestamp(1610582400+$day*$dayInYear); //                                                 c'est ici que je défini le temp
-    echo '<th style="background-color:teal; padding:20px;"> '.$DateTime->format('l-d-m-Y') .'</th>'; // doit avoir la date actuelle
+    echo '<th style="background-color:teal; padding:20px;"> '.$DateTime->format('l-9+d-m-Y') .'</th>'; // doit avoir la date actuelle
     // echo '<th style="background-color:teal; padding:20px;"> '. .'</th>'; // doit avoir la date actuelle
     
     $day = 86400;
@@ -90,26 +90,25 @@ while($dayInYear < 365 ){
         //         if($limitWeekend !== '7'){
         //             $color = "grey";
         
-
-
-
-
+        
         foreach($arrayResa AS $value) 
         {
             $debut = $value[0];
             $fin = $value[1];
-
-
                     if($timeStamp>=$debut AND $timeStamp<$fin ){
                         $titre = $value[2];
                         $login = $value[3];
                         $id = $value[4];
                         $color = "red";
-                                $path = 'reservation.php';
+                        $path = 'reservation.php';
 
                     }
-        }
+               
+                }
                 echo '<td style="background-color:'.$color.'; color:white; padding:10px;"><form method="GET" action='.$path.'><input type="hidden" name="Evenement" id="hiddenId" value="'.$id.'"><button type="submit" >'.$dateTime.'h<br />'.$titre.' <br />'. $login.'</button></form></td>';
+                $titre = "";
+                $login = "";
+                $id = "";
                 
                 
                 // $datetime1 = date_create($debut);

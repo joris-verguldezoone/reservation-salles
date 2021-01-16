@@ -34,17 +34,13 @@ ob_start();
         <h2>Nos Tarifs</h2>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe quasi reiciendis hic tempore repellat expedita accusantium magni aliquam voluptas incidunt cum, iste natus pariatur voluptates nostrum animi ipsa ducimus earum?</p>
         <h2>Notre équipe</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum excepturi eos, unde laudantium omnis dicta. Explicabo, culpa placeat maxime maiores accusamus, iure debitis saepe velit voluptatum nesciunt laudantium soluta error!</p>
+
     </section>
 
     <section id="room">
-        <article class="article_salles">
-            <img class="img_salles" alt="minas Tirith" src="images/minasTirith.jpg">
-            <img class="img_salles" alt="GameofThrones" src="images/gameOfThrones.jpg">
-        </article>
+       
         <article class="article_salles">
             <img class="img_salles" alt="Minecraft eclaté o sol" src="images/minecraftRoom.jpg">
-            <img class="img_salles" alt="Nostromo <3" src="images/nostromo.jpg">
         </article>
 
     </section>

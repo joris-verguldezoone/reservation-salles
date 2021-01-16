@@ -29,31 +29,45 @@ class Reservation {
         $datetime2 = date_create($fin);
    
         $interval = date_diff($datetime1, $datetime2);
-        echo $interval->format('%R%a'); // je suis un bg 
-    
-        if($interval->format('%R%a')>0){ // ça compte en jours
-        if($interval->format('%R%a')<=5){ // pas de resa supérieur a 5 jours
-   
-            $sql = "INSERT INTO reservations (titre,description,debut,fin,id_utilisateur ) VALUES(:titre,:description,:debut,:fin,:id_utilisateur)";
-            $result = $this->pdo->prepare($sql);
-            $result->bindvalue(':titre',$titre, \PDO::PARAM_STR);
-            $result->bindvalue(':description',$description, \PDO::PARAM_STR);
-            $result->bindvalue(':debut',$debut, \PDO::PARAM_STR);
-            $result->bindvalue(':fin',$fin, \PDO::PARAM_STR);
-            $result->bindvalue(':id_utilisateur',$id_utilisateur, \PDO::PARAM_INT);
+        $tsDebut = strtotime($debut);
+        $tsFin = strtotime($fin);
+        $tsDiff = ($tsFin - $tsDebut)/60;
+        if($interval->format('%a') == 0 ){ // ça compte en jours
+            if($interval->format('%h') == 1 ){ 
+                $reservation = new \Models\Reservation();
+                $count = $reservation->ifExistDate($debut,$fin);
+                var_dump($count);
+                if(!$count){
+                    if($tsDiff <=60 ){ 
+                        $sql = "INSERT INTO reservations (titre,description,debut,fin,id_utilisateur ) VALUES(:titre,:description,:debut,:fin,:id_utilisateur)";
+                        $result = $this->pdo->prepare($sql);
+                        $result->bindvalue(':titre',$titre, \PDO::PARAM_STR);
+                        $result->bindvalue(':description',$description, \PDO::PARAM_STR);
+                        $result->bindvalue(':debut',$debut, \PDO::PARAM_STR);
+                        $result->bindvalue(':fin',$fin, \PDO::PARAM_STR);
+                        $result->bindvalue(':id_utilisateur',$id_utilisateur, \PDO::PARAM_INT);
 
-            $result->execute();
+                        $result->execute();         
+                    }
+                    else{
+                        $errorLog="pas de réservation dépassant 1 heure";
+                    }
+                }
+                else{
+                    $errorLog = "Ce crénaux est déjà réservé";   
+                }
             }
             else{
-                $errorLog="pas de réservation dépassant 5 jours consécutifs";
+                $errorLog="pas de réservation dépassant 1 heure";
             }
         }
         else{
-                $errorLog = 'dates non conformes';
-            }
+            $errorLog="pas de réservation dépassant 1 heure";
+        }
         echo $errorLog;
-
     }
+
+
     public function resaDisplay(){
 
         $id = $_SESSION['utilisateur']['id'];
@@ -137,10 +151,16 @@ class Reservation {
         }
 
     }
+    public function ifExistDate($debut, $fin){
 
+        $sql = "SELECT debut, fin FROM reservations WHERE debut =:debut AND fin = :fin";
+        $result = $this->pdo->prepare($sql);
+        $result->bindvalue(':debut', $debut, \PDO::PARAM_STR);
+        $result->bindvalue(':fin', $fin, \PDO::PARAM_STR);
 
-
-    
-        // public function resaVerif()
-    
+        $result->execute();
+        $fetch = $result->fetch(\PDO::FETCH_ASSOC);
+        var_dump($fetch);
+        return $fetch;
+    }
 }

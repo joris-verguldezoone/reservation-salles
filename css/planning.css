@@ -4,13 +4,16 @@ section{
 }
 table{
     margin: 50px;
-    
 }
 td{
-    width:50vh;
+    text-align: center;
     border-bottom: solid black;
     border-top: solid black;
 }
 th{
     border: solid black;
+}
+button{
+    min-height:10vh;
+    min-width:10vh;
 }

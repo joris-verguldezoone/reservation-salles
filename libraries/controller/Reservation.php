@@ -20,6 +20,10 @@ public $debut= "";
 public $fin= "";
 public $id_utilisateur = "";
 
+//je chope les deux date je chope le format y-m-d  function qui prend en parametre les deux date qui vérifie si les deux dates sont bien le meme jour 
+//verifier comme pour les pseudo si ça existe pas déjà 
+
+
     public function createEvent($titre, $description, $debut, $fin, $id_utilisateur){
         $this->titre = $_POST['titre'];
         $this->description = $_POST['description'];
@@ -45,8 +49,15 @@ public $id_utilisateur = "";
 
                         if($titreLen > 2 AND $descriptionLen > 5)
                         {
-                            $newEvent = new \Models\Reservation();
-                            $newEvent->insert($titre, $description, $debut, $fin, $id_utilisateur);
+                            if($titreLen < 16 AND $descriptionLen < 250)
+                            {
+                                $newEvent = new \Models\Reservation();
+                                $newEvent->insert($titre, $description, $debut, $fin, $id_utilisateur);
+                            }
+                            else{
+                                $errorLog = "titre a 15 caracteres maximum et la description 250";
+                            }
+
                         }
                         else{
                             $errorLog = " le titre doit contenir 2 caracteres minimum et la description 5";
@@ -55,12 +66,12 @@ public $id_utilisateur = "";
                     } 
                     else 
                     {
-                        die("<p style='color: white; padding-bottom: 2em';>"."* Les réservations sont uniquement du Lundi au Vendredi et sur un jour seulement"."</p>");
+                        die("pas de réservation le week-end!");
                     } 
                 }
                 else 
                 {
-                    die("<p style='color: white; padding-bottom: 2em';>"."* Les réservations sont sur un jour seulement"."</p>");
+                    die("pas de réservation le week-end!");
                 }
             }
         else{
