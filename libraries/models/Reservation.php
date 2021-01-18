@@ -3,7 +3,6 @@
 namespace Models;
 
 require_once($database);
-// require('Model.php');
 
 class Reservation {
 
@@ -31,12 +30,11 @@ class Reservation {
         $interval = date_diff($datetime1, $datetime2);
         $tsDebut = strtotime($debut);
         $tsFin = strtotime($fin);
-        $tsDiff = ($tsFin - $tsDebut)/60;
+        $tsDiff = ($tsFin - $tsDebut)/60; // min 
         if($interval->format('%a') == 0 ){ // ça compte en jours
             if($interval->format('%h') == 1 ){ 
                 $reservation = new \Models\Reservation();
                 $count = $reservation->ifExistDate($debut,$fin);
-                var_dump($count);
                 if(!$count){
                     if($tsDiff <=60 ){ 
                         $sql = "INSERT INTO reservations (titre,description,debut,fin,id_utilisateur ) VALUES(:titre,:description,:debut,:fin,:id_utilisateur)";
@@ -50,19 +48,19 @@ class Reservation {
                         $result->execute();         
                     }
                     else{
-                        $errorLog="pas de réservation dépassant 1 heure";
+                        $errorLog="<p class='alert alert-danger' role='alert'>pas de réservation dépassant 1 heure</p>";
                     }
                 }
                 else{
-                    $errorLog = "Ce crénaux est déjà réservé";   
+                    $errorLog = "<p class='alert alert-danger' role='alert'>Ce crénaux est déjà réservé</p>";   
                 }
             }
             else{
-                $errorLog="pas de réservation dépassant 1 heure";
+                $errorLog="<p class='alert alert-danger' role='alert'>pas de réservation dépassant 1 heure</p>";
             }
         }
         else{
-            $errorLog="pas de réservation dépassant 1 heure";
+            $errorLog="<p class='alert alert-danger' role='alert'>pas de réservation dépassant 1 heure</p>";
         }
         echo $errorLog;
     }
@@ -70,7 +68,7 @@ class Reservation {
 
     public function resaDisplay(){
 
-        $id = $_SESSION['utilisateur']['id'];
+        // $id = $_SESSION['utilisateur']['id'];
 
 
         $sql ="SELECT r.debut, r.fin, r.titre, u.login, r.id FROM reservations AS r LEFT JOIN utilisateurs AS u ON u.id = id_utilisateur ORDER BY r.debut";
@@ -160,7 +158,6 @@ class Reservation {
 
         $result->execute();
         $fetch = $result->fetch(\PDO::FETCH_ASSOC);
-        var_dump($fetch);
         return $fetch;
     }
 }

@@ -1,6 +1,17 @@
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:80vh;
+    background-image: url('../images/8218308_full-fond-d-ecran-hd-tekno-hd-techno-backgrounds-wallpaper-cave.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 section{
     background-color: teal;
     height:50vh;
     width:40vh;
+    padding:20px;
     color:white;
 }

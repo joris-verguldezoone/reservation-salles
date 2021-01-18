@@ -6,7 +6,16 @@ namespace Models {
 
     class Inscription extends Model
     {
-        protected $table = "articles"; //pour sql
-
+        public function insert($login, $cryptedpass)
+        {
+            $sql = "INSERT INTO utilisateurs (login, password) VALUES (:login, :password)"; 
+            $result = $this->pdo->prepare($sql);
+    
+            $result->bindvalue(':login', $login, \PDO::PARAM_STR);
+            $result->bindvalue(':password', $cryptedpass, \PDO::PARAM_STR);
+    
+            $result->execute();
+            
+        }
     }
 }

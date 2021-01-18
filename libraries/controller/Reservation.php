@@ -53,29 +53,30 @@ public $id_utilisateur = "";
                             {
                                 $newEvent = new \Models\Reservation();
                                 $newEvent->insert($titre, $description, $debut, $fin, $id_utilisateur);
+                                echo '<p class="alert alert-success" role="alert">Evenement créer avec succès<p>';
                             }
                             else{
-                                $errorLog = "titre a 15 caracteres maximum et la description 250";
+                                $errorLog = "<p class='alert alert-danger' role='alert'>titre a 15 caracteres maximum et la description 250</p>";
                             }
 
                         }
                         else{
-                            $errorLog = " le titre doit contenir 2 caracteres minimum et la description 5";
+                            $errorLog = "<p class='alert alert-danger' role='alert'> le titre doit contenir 2 caracteres minimum et la description 5</p>";
                         }
              
                     } 
                     else 
                     {
-                        die("pas de réservation le week-end!");
+                        $errorLog = "<p class='alert alert-danger' role='alert'>pas de réservation le week-end!</p>";
                     } 
                 }
                 else 
                 {
-                    die("pas de réservation le week-end!");
+                    $errorLog = "<p class='alert alert-danger' role='alert'>pas de réservation le week-end!</p>";
                 }
             }
         else{
-            $errorLog = "Vous devez remplir les champs pour créer l'événement";
+            $errorLog = "<p class='alert alert-danger' role='alert'>Vous devez remplir les champs pour créer l'événement</p>";
         }
         echo $errorLog;
             

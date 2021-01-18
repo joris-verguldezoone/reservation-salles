@@ -12,60 +12,25 @@
             <div class="col-md-6 mt-md-0 mt-3">
 
                 <!-- Content -->
-                <h5 class="text-uppercase">Footer Content</h5>
-                <p>Here you can use rows and columns to organize your footer content.</p>
+                <h5 class="text-uppercase">La Cage D'escalier</h5>
 
+<?php  if(isset($_SESSION['connected'])){
+    
+                echo "<form id='deco' action='' method='POST'>
+                <input type='submit' id='deconnexion' name='disconnect' value='Déconnexion'>
+                </form>";
+                if(isset($_POST['disconnect'])){
+                    session_destroy();
+                }
+}  
+?>
             </div>
             <!-- Grid column -->
 
             <hr class="clearfix w-100 d-md-none pb-3">
 
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
+   
 
-                <!-- Links -->
-                <h5 class="text-uppercase">Links</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 4</a>
-                    </li>
-                </ul>
-
-            </div>
-            <!-- Grid column -->
-
-            <!-- Grid column -->
-            <div class="col-md-3 mb-md-0 mb-3">
-
-                <!-- Links -->
-                <h5 class="text-uppercase">Links</h5>
-
-                <ul class="list-unstyled">
-                    <li>
-                        <a href="#!">Link 1</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 2</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 3</a>
-                    </li>
-                    <li>
-                        <a href="#!">Link 4</a>
-                    </li>
-                </ul>
-
-            </div>
             <!-- Grid column -->
 
         </div>
@@ -76,10 +41,9 @@
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
-        <img src="<?php echo $img_signature; ?>"> © 2020 Copyright:
-        <a href="https://mdbootstrap.com/">
+        <img src="<?php echo $img_signature; ?>"> © 2021 Copyright:    
             <p class="signature_font"> HARDJOJO </p>
-        </a>
+        
     </div>
     <!-- Copyright -->
 

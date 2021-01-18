@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="<?php echo $bootstrap; ?>">
     <link rel="stylesheet" href="<?php echo $headerCss; ?>">
     <link rel="stylesheet" href="<?php echo $pagesCss; ?>">
+    <link rel="stylesheet" href="<?php echo $footerCss; ?>">
     <title><?php $title ?></title>
 </head>
 
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">La Cage D'Esclalier</a>
+            <a class="navbar-brand" style="font-weight:bold;" href="<?php echo $index;?>">La Cage D'Escalier</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -38,7 +39,7 @@
                         <a class="nav-link" href="<?php echo $planning; ?>">Planning</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo $reservation; ?>">Reservation</a>
+                        <a class="nav-link" href="<?php echo $reservation; ?>">Reserver</a>
                     </li>
 
                 </ul>
