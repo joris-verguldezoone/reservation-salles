@@ -10,24 +10,32 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     padding-top: 15vh;
-    width:40%;
-    height:60vh;
+    width:45%;
+    height:45vh;
     padding-left: 15vh;
     padding-right:15vh;
+    margin-top:5%;
+}
+#contentSection{    
+    background-color: rgba(31, 54, 90, 0.8);
+    border-radius: 1em;
 }
 h1{
     font-size: 3em;
-    color: rgb(194, 164, 164);
+    color: whitesmoke;
+    font-weight: bold;
 }
 h2{
     font-size: 1.5em;
-    color: rgb(194, 164, 164);
+    color: whitesmoke;
+    font-weight: bold;
 
 }
 p{
     font-size: 1.1em;
-    color: rgb(194, 164, 164);
+    color: whitesmoke;
 
 }
 #room{

@@ -1,5 +1,4 @@
 <?php
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,14 +31,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo $connexion; ?>">Connexion</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo $profil; ?>">Profil</a>
-                    </li>
+                    <?php
+                    
+                    if(isset($_SESSION['connected'])){
+                        echo'
+                        <li class="nav-item">
+                            <a class="nav-link" href="'.$profil.'">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="'.$reservation.'">Reserver</a>
+                        </li>';
+                    }
+                    ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?php echo $planning; ?>">Planning</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo $reservation; ?>">Reserver</a>
                     </li>
 
                 </ul>

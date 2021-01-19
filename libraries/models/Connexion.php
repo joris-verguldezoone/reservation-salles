@@ -6,7 +6,7 @@ namespace Models {
 
     class Connexion extends Model
     {
-        public function ifDoesntExist($login) 
+        public function ifDoesntExist($login) // si l'utilisateur n'existe pas déjà return true
         {
             $sql = "SELECT login FROM utilisateurs WHERE login = :login";
             $result = $this->pdo->prepare($sql);

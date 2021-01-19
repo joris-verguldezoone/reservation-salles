@@ -4,37 +4,25 @@ namespace Models;
 
 require_once($database);
 require_once($utils);
-// require_once($utils);
-// require('libraries/controller/Inscription.php');
 
-
-abstract class Model
+abstract class Model // <3
 {
-    protected $pdo; //faux
+    protected $pdo;
     protected $login;
     protected $password;
 
-  
-
     public function __construct()
     {
-        $this->pdo = connect();
+        $this->pdo = connect(); // initialisation de la connexion pour toutes les fonctions
     }
 
-    // public static function redirect($path)
-    // {
-    //     header("Location: $path");
-    //     exit();
-    // } http
-
-    public function secure($var)
+    public function secure($var) // le sang de la veine
     {
         $var = htmlspecialchars(trim($var));
         return $var;
     }
-    public function ifExist($login) // register->
+    public function ifExist($login) // Est ce que l'utilisateur existe ? 
     {
-        // $login = $this->login;                                                                           revoir
         $sql = "SELECT login FROM utilisateurs WHERE login = :login";
         $result = $this->pdo->prepare($sql);
         $result->bindvalue(':login', $login, \PDO::PARAM_STR);
@@ -53,7 +41,7 @@ abstract class Model
 
         return $fetch;
     }
-    public function findAll($login)
+    public function findAll($login) // on repere un utilisateur et on prends toutes ses données
     {
         $sql = "SELECT * FROM utilisateurs WHERE login = :login";
         $result = $this->pdo->prepare($sql);

@@ -1,4 +1,7 @@
-
+.navbar {
+    padding:0;
+    
+}
 .ul_row{
     display: flex;
     flex-direction: row;

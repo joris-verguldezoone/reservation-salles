@@ -1,10 +1,11 @@
 <?php
 
 namespace Models;
+require_once("Model.php");
 
 require_once($database);
 
-class Reservation {
+class Reservation extends Model {
 
     public $titre = "";
     public $description = "";
@@ -16,11 +17,7 @@ class Reservation {
         {
             $this->pdo = connect();
         }
-        
-        
-        
-        // if(($début>2022-12-12) && ($debut<)
-        
+               
     public function insert($titre, $description, $debut, $fin, $id_utilisateur){
         date_default_timezone_set('Europe/Paris'); // fuseau horaire
         $errorLog = "";
@@ -28,14 +25,14 @@ class Reservation {
         $datetime2 = date_create($fin);
    
         $interval = date_diff($datetime1, $datetime2);
-        $tsDebut = strtotime($debut);
+        $tsDebut = strtotime($debut); // ts pour timeStamp
         $tsFin = strtotime($fin);
-        $tsDiff = ($tsFin - $tsDebut)/60; // min 
+        $tsDiff = ($tsFin - $tsDebut)/60; // ça compte en min, avec datime il y avait une faille
         if($interval->format('%a') == 0 ){ // ça compte en jours
-            if($interval->format('%h') == 1 ){ 
+            if($interval->format('%h') == 1 ){  // ça compte en heure
                 $reservation = new \Models\Reservation();
                 $count = $reservation->ifExistDate($debut,$fin);
-                if(!$count){
+                if(!$count){ // si la reserevation n'existe pas alors on la crée
                     if($tsDiff <=60 ){ 
                         $sql = "INSERT INTO reservations (titre,description,debut,fin,id_utilisateur ) VALUES(:titre,:description,:debut,:fin,:id_utilisateur)";
                         $result = $this->pdo->prepare($sql);
@@ -45,7 +42,7 @@ class Reservation {
                         $result->bindvalue(':fin',$fin, \PDO::PARAM_STR);
                         $result->bindvalue(':id_utilisateur',$id_utilisateur, \PDO::PARAM_INT);
 
-                        $result->execute();         
+                        $result->execute();          // GG WP
                     }
                     else{
                         $errorLog="<p class='alert alert-danger' role='alert'>pas de réservation dépassant 1 heure</p>";
@@ -66,9 +63,8 @@ class Reservation {
     }
 
 
-    public function resaDisplay(){
+    public function resaDisplay(){ // on affiche les réservation à l'aide d'un tableau multidimensionnel
 
-        // $id = $_SESSION['utilisateur']['id'];
 
 
         $sql ="SELECT r.debut, r.fin, r.titre, u.login, r.id FROM reservations AS r LEFT JOIN utilisateurs AS u ON u.id = id_utilisateur ORDER BY r.debut";
@@ -101,7 +97,7 @@ class Reservation {
         return $tableau;
     }
 
-    public function getTitle(){
+    public function getTitle(){ // :)
         $sql = "SELECT titre FROM reservations ORDER BY id";
         $result = $this->pdo->prepare($sql);
         $result->execute();
@@ -110,16 +106,7 @@ class Reservation {
             $tableau[$i] = $fetch['titre'];
             $i++;
         }
-
         return $tableau;
-
-        // $sql = "SELECT titre FROM reservations WHERE id_utilisateur = :SESSIONid AND id = :id";
-        // $result = $this->pdo->prepare($sql);
-        // $result = bindvalue(':id_utilisateur',$SESSIONid, \PDO::PARAM_INT);
-        // $result = bindvalue(':id_utilisateur',$id, \PDO::PARAM_INT);
-        // $result->execute();
-
-        // return $result;
     }
 
     
@@ -130,7 +117,7 @@ class Reservation {
 
         return $result;
     }
-    public function eventLink($id){
+    public function eventLink($id){ // on utilise l'id de chaque event pour afficher les info qui lui correspondent
         $sql = "SELECT u.login, r.titre, r.description, r.debut, r.fin FROM reservations AS r INNER JOIN utilisateurs AS u WHERE r.id = '$id' AND u.id = r.id_utilisateur";
         $result = $this->pdo->prepare($sql);
         $result->bindvalue(':id', $id, \PDO::PARAM_INT);
@@ -144,12 +131,21 @@ class Reservation {
             $tableau[$i][] = $fetch['fin'];
             $i++;
             
-            return $tableau;
+            $tableauDisplay = "<article>
+            <h1>".$tableau[0][0]."</h1>
+            <h2>".$tableau[0][1]."</h2>
+            <p>".$tableau[0][2]."</p>
+            </article>
+            <article>
+                <p> Début ".$tableau[0][3].'______Fin '.$tableau[0][4]."</p>
+            </article>";
+
+            return $tableauDisplay; // on imprime l'affichage dans la view
 
         }
 
     }
-    public function ifExistDate($debut, $fin){
+    public function ifExistDate($debut, $fin){ // :)
 
         $sql = "SELECT debut, fin FROM reservations WHERE debut =:debut AND fin = :fin";
         $result = $this->pdo->prepare($sql);

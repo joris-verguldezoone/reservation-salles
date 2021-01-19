@@ -4,16 +4,12 @@ namespace Controller;
 
 require_once($Http);
 require_once($utils);
+
 class Inscription // s'appel User
 {
-    // attributs
-
-    protected $login = "";
-    protected $password = "";
-
-    // public function __construct(){
-
-    // }
+    public $login = "";
+    public $password = "";
+   
     public function register($login, $password, $confirm_password)
     {
         $this->login = $_POST['login'];
@@ -26,13 +22,12 @@ class Inscription // s'appel User
             $login_length = strlen($login);
             $password_length = strlen($password);
             $confirm_password_length = strlen($confirm_password);
-            if (($login_length >= 2) && ($password_length  >= 5) && ($confirm_password_length >= 4)) {
-                // si les champs n'ont pas assez de caractere alors $errorLog
+            if (($login_length >= 2) && ($password_length  >= 5) && ($confirm_password_length >= 4)) { // limite minimum de caractere
 
-                if (($login_length <= 30) && ($password_length  <= 30) && ($confirm_password_length <= 30)) {
+                if (($login_length <= 30) && ($password_length  <= 30) && ($confirm_password_length <= 30)) { // limite maximum de caractere
 
                     $modelInscription = new \Models\Inscription();
-                    $return = $modelInscription->ifExist($login);
+                    $return = $modelInscription->ifExist($login); // l'utilisateur existe-t-il ? 
 
                     if (!$return) {
 
@@ -44,7 +39,7 @@ class Inscription // s'appel User
                             $modelInscription->insert($login, $cryptedpass);
 
                             $Http = new \Http();
-                            $Http->redirect('connexion.php');
+                            $Http->redirect('connexion.php'); // GG WP
                         } else {
                             $errorLog = "<p class='alert alert-danger' role='alert'>Confirmation du mot de passe incorrect</p>";
                         }
@@ -60,8 +55,6 @@ class Inscription // s'appel User
         } else {
             $errorLog = "<p class='alert alert-danger' role='alert'>Champs non remplis</p>";
         }
-
-
         echo $errorLog;
     }
 

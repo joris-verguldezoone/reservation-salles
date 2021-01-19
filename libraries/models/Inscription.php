@@ -6,7 +6,7 @@ namespace Models {
 
     class Inscription extends Model
     {
-        public function insert($login, $cryptedpass)
+        public function insert($login, $cryptedpass) //insertion dans la bdd
         {
             $sql = "INSERT INTO utilisateurs (login, password) VALUES (:login, :password)"; 
             $result = $this->pdo->prepare($sql);
